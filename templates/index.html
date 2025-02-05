@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deception Face Analysis Developed</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #000;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            max-width: 500px;
+            margin: auto;
+            padding: 20px;
+            border: 2px solid #00FF00;
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.8);
+        }
+        input[type="file"] {
+            margin: 10px 0;
+        }
+        button {
+            background-color: #00FF00;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #00CC00;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Deception Face Analysis Developed by Opposite6890</h1>
+        <form id="uploadForm" action="/upload" method="post" enctype="multipart/form-data">
+            <input type="file" name="file" accept="video/*" required>
+            <br>
+            <button type="submit">Upload & Analyze</button>
+        </form>
+    </div>
+</body>
+</html>
