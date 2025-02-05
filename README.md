@@ -1,4 +1,4 @@
-Deception Face Analysis
+Deception Face Analysis Ver. Beta 2.1
 
 A web-based application that detects truthfulness or deception in video footage using deep learning and facial analysis. This system processes uploaded video files, analyzes facial expressions, and assigns a truthfulness score for each detected face. The final result is a processed video with truthfulness visualizations, including a progress bar and a final conclusion.
 
