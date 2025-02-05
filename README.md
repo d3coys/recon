@@ -127,14 +127,17 @@ gunicorn
 
 The processed video will display:
 	•	A bounding box around the detected face.
+ 
 	•	A Truthfulness Score (Dynamic) below the face.
+ 
 	•	A Progress Bar changing color based on truthfulness.
+ 
 	•	Final Conclusion: Truthful (🟢) or Deception (🔴).
 
 
 👨‍💻 Authors
-	•	[Oppsoite6890] - Developer
-	•	GitHub: https://github.com/decoys
+	•	[Opposite6890] - Developer
+	•	GitHub: https://github.com/d3coys
 
 📝 License
 
