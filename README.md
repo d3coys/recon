@@ -29,8 +29,11 @@ cd recon
 2️⃣ Create a Virtual Environment
 
 python3 -m venv venv
+
 source venv/bin/activate  # For Mac/Linux
+
 venv\Scripts\activate     # For Windows
+
 
 
 3️⃣ Install Dependencies
@@ -41,7 +44,9 @@ pip install -r requirements.txt
 4️⃣ Download Required Models
 
 The application requires two pre-trained models:
+
 	1.	shape_predictor_68_face_landmarks.dat (for facial landmark detection)
+ 
 	2.	truthfulness_model.h5 (for deep learning-based truthfulness detection)
 
 Ensure these files exist in the project folder before running the program.
@@ -55,10 +60,15 @@ python recon.py
 Once the server starts, open http://127.0.0.1:5000/ in your web browser.
 
 Upload a Video for Analysis
+
 	1.	Click “Choose File” and select an MP4, AVI, MOV, or MKV video.
+ 
 	2.	Click “Upload” to start processing.
+ 
 	3.	The system will analyze the video and display truthfulness scores frame by frame.
+ 
 	4.	Once the analysis is complete, you can download the processed video with truthfulness overlays.
+ 
  
 
 
@@ -77,10 +87,15 @@ bz2file
 gunicorn
 
 📌 System Requirements
+
 	•	Python 3.8+
+ 
 	•	RAM: At least 8GB (Recommended for deep learning processing)
+ 
 	•	A dedicated GPU (Optional, but speeds up processing)
+ 
 	•	Operating System: Windows / macOS / Linux
+ 
 
 
 📜 File Structure
@@ -95,6 +110,8 @@ gunicorn
 
 │── 📜 recon.py                  # Main Flask application
 
+│── 📜 recon2.py                  # Main Flask application
+
 │── 📜 truthfulness_model.h5      # Pre-trained TensorFlow model
 
 │── 📜 shape_predictor_68_face_landmarks.dat  # Dlib face landmark model
@@ -107,6 +124,7 @@ gunicorn
 📸 Example Output
 
 The processed video will display:
+
 	•	A bounding box around the detected face.
  
 	•	A Truthfulness Score (Dynamic) below the face.
@@ -117,7 +135,9 @@ The processed video will display:
 
 
 👨‍💻 Authors
+
 	•	[Opposite6890] - Developer
+ 
 	•	GitHub: https://github.com/d3coys
 
 📝 License
