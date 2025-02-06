@@ -77,14 +77,23 @@ Upload a Video for Analysis
 Below is the list of required Python packages:
 
 Flask
+
 opencv-python
+
 dlib
+
 tensorflow
+
 numpy
+
 matplotlib
+
 urllib3
+
 bz2file
+
 gunicorn
+
 
 📌 System Requirements
 
