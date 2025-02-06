@@ -1,30 +1,44 @@
+import os
 import tensorflow as tf
 from tensorflow import keras
-from tensorflow.keras import layers
-import numpy as np
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, Dropout
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
-# Create a simple CNN model
-model = keras.Sequential([
-    layers.Conv2D(32, (3, 3), activation='relu', input_shape=(64, 64, 3)),
-    layers.MaxPooling2D((2, 2)),
-    layers.Conv2D(64, (3, 3), activation='relu'),
-    layers.MaxPooling2D((2, 2)),
-    layers.Flatten(),
-    layers.Dense(128, activation='relu'),
-    layers.Dense(1, activation='sigmoid')  # Output: Probability of truthfulness
+# Dataset paths
+TRAIN_DIR = "dataset/train"
+VAL_DIR = "dataset/val"
+
+# Load and preprocess dataset
+print("Loading dataset...")
+datagen = ImageDataGenerator(rescale=1./255)
+train_generator = datagen.flow_from_directory(TRAIN_DIR, target_size=(64, 64), batch_size=32, class_mode='binary')
+val_generator = datagen.flow_from_directory(VAL_DIR, target_size=(64, 64), batch_size=32, class_mode='binary')
+
+# Build model
+print("Building model...")
+model = Sequential([
+    Conv2D(32, (3, 3), activation='relu', input_shape=(64, 64, 3)),
+    MaxPooling2D(pool_size=(2, 2)),
+    
+    Conv2D(64, (3, 3), activation='relu'),
+    MaxPooling2D(pool_size=(2, 2)),
+    
+    Flatten(),
+    Dense(128, activation='relu'),
+    Dropout(0.5),
+    Dense(1, activation='sigmoid')  # Output layer for binary classification
 ])
 
-# Compile the model
+# **FIXED: Compile the model**
 model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
 
-# Generate random data for training (Replace this with real dataset)
-X_train = np.random.rand(1000, 64, 64, 3)  # 1000 random face images
-y_train = np.random.randint(0, 2, 1000)  # 0 = Deception, 1 = Truthful
+# Train model
+print("Training model...")
+model.fit(train_generator, validation_data=val_generator, epochs=20)
 
-# Train the model
-model.fit(X_train, y_train, epochs=10, batch_size=32)
+# Save model
+os.makedirs("models", exist_ok=True)
+model.save("models/truthfulness_model.h5")
 
-# Save the trained model
-model.save("truthfulness_model.h5")
-
-print("Model saved successfully as 'truthfulness_model.h5'")
+print("✅ Model training complete & saved to models/truthfulness_model.h5")
