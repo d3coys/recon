@@ -61,25 +61,6 @@ Upload a Video for Analysis
 	4.	Once the analysis is complete, you can download the processed video with truthfulness overlays.
  
 
-📡 Deployment on GitHub & Heroku
-
-
-1️⃣ Push to GitHub
-
-git init  
-git add .  
-git commit -m "Initial commit - Truthfulness Detector"  
-git branch -M main  
-git remote add origin https://github.com/YOUR_USERNAME/truthfulness-detector.git  
-git push -u origin main  
-
-
-2️⃣ Deploy to Heroku (Optional)
-
-heroku login  
-heroku create truthfulness-detector  
-git push heroku main  
-heroku open  
 
 🔧 Dependencies (requirements.txt)
 
