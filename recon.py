@@ -5,6 +5,7 @@ import numpy as np
 import tensorflow as tf
 from flask import Flask, render_template, request, send_file
 from utils import load_model, allowed_file, draw_hud
+from preprocess import preprocess_face
 
 app = Flask(__name__, template_folder="templates")
 
@@ -21,16 +22,6 @@ detector = dlib.get_frontal_face_detector()
 # Store total truthfulness scores for averaging
 total_truthfulness_scores = []
 
-def preprocess_face(face_roi):
-    """ Preprocess face for TensorFlow model (resize & normalize) """
-    if face_roi is None or face_roi.size == 0:
-        return np.zeros((1, 64, 64, 3))  # Return blank if no face detected
-    
-    face_resized = cv2.resize(face_roi, (64, 64))
-    face_resized = face_resized.astype("float32") / 255.0
-    face_resized = np.expand_dims(face_resized, axis=0)  # Add batch dimension
-    return face_resized
-
 def detect_truthfulness(frame):
     """Detects faces in the frame and predicts truthfulness score using the model."""
     faces = detector(frame)
@@ -44,7 +35,7 @@ def detect_truthfulness(frame):
             continue
 
         processed_face = preprocess_face(face_roi)
-        raw_score = truthfulness_model.predict(processed_face)[0][0]
+        raw_score = truthfulness_model.predict(processed_face, verbose=0)[0][0]
 
         # Normalize score dynamically (0.10 - 0.90 range)
         truthfulness_score = 0.10 + (raw_score * 0.80)
