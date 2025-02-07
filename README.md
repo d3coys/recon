@@ -1,154 +1,112 @@
-Deception Face Analysis Ver. Beta 2.1
+# Deception Face Analysis
+
+## Overview
+This project is a deep learning-based **Truthfulness Detection System** that analyzes facial expressions to determine the likelihood of truthfulness or deception in video footage. It utilizes **Dlib** for face detection and a **Convolutional Neural Network (CNN)** trained on a dataset of truthful and deceptive facial expressions. The model is integrated into a Flask-based web application that allows users to upload videos for analysis.
+
+---
+
+## Features
+- **Face Detection**: Utilizes Dlib's frontal face detector.
+- **Deep Learning Model**: CNN-based classifier trained on labeled truthful and deceptive expressions.
+- **Dynamic Score Calculation**: Truthfulness is measured frame by frame, and a cumulative score is computed.
+- **Flask Web Interface**: Users can upload videos and receive a visual overlay with truthfulness analysis.
+- **Progress Bar & Color Coding**: Visual indicators dynamically adjust based on detection results.
+
+---
+
+## Installation
+### Prerequisites
+- Python 3.10+
+- Virtual environment (recommended)
+- TensorFlow, OpenCV, Dlib
+
+### Setup
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/d3coys/recon.git
+   cd recon
+   ```
+
+2. Create and activate a virtual environment:
+   ```bash
+   python -m venv venv-tf
+   source venv-tf/bin/activate  # On macOS/Linux
+   venv-tf\Scripts\activate     # On Windows
+   ```
+
+3. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. Ensure the dataset is structured correctly:
+   ```bash
+   dataset/
+   ├── train/
+   │   ├── truthful/
+   │   ├── deceptive/
+   ├── val/
+   │   ├── truthful/
+   │   ├── deceptive/
+   ```
+
+5. Train the model (optional if pre-trained model exists):
+   ```bash
+   python train_model.py
+   ```
+
+6. Run the web application:
+   ```bash
+   python recon.py
+   ```
+
+---
+
+## Methodology
+### 1. **Dataset Preparation**
+- The dataset consists of labeled **truthful** and **deceptive** facial expressions.
+- Images are **preprocessed** (resized to 64x64, normalized) before training.
+- The dataset is split into **80% training** and **20% validation** for evaluation.
+
+### 2. **Model Architecture**
+- A **CNN model** is used for feature extraction from facial expressions.
+- The model is trained with **binary cross-entropy loss** and **Adam optimizer**.
+- Dropout layers are added to prevent overfitting.
+
+### 3. **Training & Optimization**
+- Model is trained for **20 epochs** with early stopping to prevent overfitting.
+- Data augmentation (random flips, rotations) improves generalization.
+- The trained model is saved as `truthfulness_model.h5`.
+
+### 4. **Inference & Real-time Processing**
+- The model processes each frame from a video.
+- A **truthfulness score** (0 to 1) is assigned per frame.
+- The **total score** is an average of all frame scores.
+- The result is overlaid on the video with a **progress bar** and **color-coded conclusion**.
+
+---
+
+## Validation & Accuracy
+- **Validation Accuracy**: ~63-66% (varies based on dataset quality and augmentation).
+- **Loss Convergence**: Trained with validation loss monitoring.
+- **Evaluation**: Confusion matrix and F1-score were used for final model assessment.
+- **Future Improvements**:
+  - Expand dataset with more diverse facial expressions.
+  - Use transformer-based architectures (e.g., Vision Transformers).
+  - Implement a multi-modal approach (combine facial analysis with audio tone detection).
+
+---
+
+## Contributors
+- **Opposite6890** (Lead Developer)
+- **https://instagram.com/opposite6890.recon**
+- **https://t.me/opposite6890_xfire**
+- **Skylark** (Testing & Implementation)
 
-A web-based application that detects truthfulness or deception in video footage using deep learning and facial analysis. This system processes uploaded video files, analyzes facial expressions, and assigns a truthfulness score for each detected face. The final result is a processed video with truthfulness visualizations, including a progress bar and a final conclusion.
+For issues and improvements, please raise a GitHub issue.
 
-🚀 Features
+---
 
-✅ Facial Detection: Automatically detects faces in the video.
+## License
+MIT License
 
-✅ Truthfulness Prediction: Uses a trained deep learning model to analyze facial expressions.
-
-✅ Dynamic Truthfulness Score: Displays a real-time score for detected faces.
-
-✅ Graphical Overlay: Adds a truthfulness progress bar and a final truthfulness score.
-
-✅ Conclusion Classification: Determines Truthful (🟢 Green) or Deception (🔴 Red).
-
-✅ Download Processed Video: After analysis, users can download the output video.
-
-
-📦 Installation
-
-1️⃣ Clone the Repository
-
-git clone https://github.com/d3coys/recon.git
-
-cd recon
-
-
-2️⃣ Create a Virtual Environment
-
-python3 -m venv venv
-
-source venv/bin/activate  # For Mac/Linux
-
-venv\Scripts\activate     # For Windows
-
-
-
-3️⃣ Install Dependencies
-
-pip install -r requirements.txt
-
-
-4️⃣ Download Required Models
-
-The application requires two pre-trained models:
-
-	1.	shape_predictor_68_face_landmarks.dat (for facial landmark detection)
- 
-	2.	truthfulness_model.h5 (for deep learning-based truthfulness detection)
-
-Ensure these files exist in the project folder before running the program.
-
-🛠 Usage
-
-Run the Web Application
-
-python recon.py
-
-Once the server starts, open http://127.0.0.1:5000/ in your web browser.
-
-Upload a Video for Analysis
-
-	1.	Click “Choose File” and select an MP4, AVI, MOV, or MKV video.
- 
-	2.	Click “Upload” to start processing.
- 
-	3.	The system will analyze the video and display truthfulness scores frame by frame.
- 
-	4.	Once the analysis is complete, you can download the processed video with truthfulness overlays.
- 
- 
-
-
-🔧 Dependencies (requirements.txt)
-
-Below is the list of required Python packages:
-
-Flask
-
-opencv-python
-
-dlib
-
-tensorflow
-
-numpy
-
-matplotlib
-
-urllib3
-
-bz2file
-
-gunicorn
-
-
-📌 System Requirements
-
-	•	Python 3.8+
- 
-	•	RAM: At least 8GB (Recommended for deep learning processing)
- 
-	•	A dedicated GPU (Optional, but speeds up processing)
- 
-	•	Operating System: Windows / macOS / Linux
- 
-
-
-📜 File Structure
-
-📂 truthfulness-detector
-
-│── 📂 templates/                # Contains HTML files for the web interface
-
-│── 📂 uploads/                  # Stores uploaded video files
-
-│── 📂 processed/                # Stores processed output videos
-
-│── 📜 recon.py                  # Main Flask application
-
-│── 📜 recon2.py                  # Main Flask application
-
-│── 📜 truthfulness_model.h5      # Pre-trained TensorFlow model
-
-│── 📜 shape_predictor_68_face_landmarks.dat  # Dlib face landmark model
-
-│── 📜 requirements.txt           # Python dependencies
-
-│── 📜 README.md                  # Project documentation
-
-
-📸 Example Output
-
-The processed video will display:
-
-	•	A bounding box around the detected face.
- 
-	•	A Truthfulness Score (Dynamic) below the face.
- 
-	•	A Progress Bar changing color based on truthfulness.
- 
-	•	Final Conclusion: Truthful (🟢) or Deception (🔴).
-
-
-👨‍💻 Authors
-
-	•	[Opposite6890] - Developer
- 
-	•	GitHub: https://github.com/d3coys
-
-📝 License
-
-This project is licensed under the MIT License.
