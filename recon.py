@@ -46,12 +46,11 @@ def detect_truthfulness(frame):
         processed_face = preprocess_face(face_roi)
         raw_score = truthfulness_model.predict(processed_face)[0][0]
 
-        # Ensure score varies dynamically (between 0.10 - 0.80)
-        truthfulness_score = 0.10 + (raw_score * 0.70)
+        # Normalize score dynamically (0.10 - 0.90 range)
+        truthfulness_score = 0.10 + (raw_score * 0.80)
 
-        total_truthfulness_scores.append(truthfulness_score)
         results.append((face, truthfulness_score))
-
+    
     return results
 
 def process_video(video_path, output_path):
@@ -60,7 +59,6 @@ def process_video(video_path, output_path):
     total_truthfulness_scores = []
 
     cap = cv2.VideoCapture(video_path)
-    
     if not cap.isOpened():
         print(f"Error: Cannot open video file {video_path}")
         return  # Exit function if video cannot be opened
@@ -82,14 +80,14 @@ def process_video(video_path, output_path):
             break
         
         results = detect_truthfulness(frame)
-
-        # **Accumulate scores across frames**
-        for _, score in results:
-            total_truthfulness_scores.append(score)
-
+        
+        # Accumulate scores across frames
+        if results:
+            frame_scores = [score for _, score in results]
+            total_truthfulness_scores.append(np.mean(frame_scores))
+        
         avg_truthfulness = np.mean(total_truthfulness_scores) if total_truthfulness_scores else 0.0
-        frame = draw_hud(frame, results, total_truthfulness_scores)
-
+        frame = draw_hud(frame, results, avg_truthfulness)
         out.write(frame)
 
     cap.release()
