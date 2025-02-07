@@ -15,7 +15,7 @@ def load_data(data_dir, target_size=(64, 64), batch_size=32):
     datagen = ImageDataGenerator(
         rescale=1./255, rotation_range=20, width_shift_range=0.2,
         height_shift_range=0.2, shear_range=0.15, zoom_range=0.2,
-        horizontal_flip=True, validation_split=0.2  # 80% train, 20% validation
+        horizontal_flip=True, validation_split=0.2
     )
 
     train_generator = datagen.flow_from_directory(
