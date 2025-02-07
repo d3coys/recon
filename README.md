@@ -59,7 +59,13 @@ This project is a deep learning-based **Truthfulness Detection System** that ana
    ```bash
    python recon.py
    ```
+7. Links to add Dataset:
 
+- https://www.kaggle.com/datasets/msambare/fer2013
+- http://mohammadmahoor.com/affectnet/
+- https://wilmabainbridge.com/facememorability2.html
+- https://libguides.princeton.edu/facedatabases
+- https://github.com/NVlabs/ffhq-dataset
 ---
 
 ## Methodology
