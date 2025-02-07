@@ -15,7 +15,6 @@ def allowed_file(filename):
 
 def draw_hud(frame, results, total_scores):
     """Draws detection results, truthfulness score, progress bar, and conclusion on the frame."""
-    
     avg_truthfulness = np.mean(total_scores) if total_scores else 0.0  # Compute total score
 
     for face, truthfulness_score in results:
